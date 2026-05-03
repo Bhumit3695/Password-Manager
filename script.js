@@ -1,25 +1,25 @@
 // --- 1. BARCODE SCANNER LOGIC ---
 function onScanSuccess(decodedText, decodedResult) {
-    // Put the scanned code into the manual input box automatically
+
     document.getElementById('barcodeNum').value = decodedText;
     
-    // Optional: add a small beep or visual feedback here
+    //visual feed back
     console.log(`Scan success: ${decodedText}`);
 }
 
 function onScanFailure(error) {
-    // We usually leave this empty to avoid spamming the console
+    
 }
 
 let html5QrcodeScanner = new Html5QrcodeScanner(
     "reader", 
     { fps: 10, qrbox: {width: 250, height: 150} }, 
-    /* verbose= */ false
+    false
 );
 html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 
 
-// --- 2. INVENTORY MANAGEMENT LOGIC ---
+// Logic
 function addItem() {
     const name = document.getElementById('itemName').value;
     const qty = parseInt(document.getElementById('itemQty').value);
@@ -33,7 +33,7 @@ function addItem() {
     const table = document.getElementById('inventoryBody');
     const row = table.insertRow();
 
-    // Logic: If qty is less than 5, it's Low Stock
+    // Logic of qty less than 5 indicator
     const statusClass = qty < 5 ? 'low-stock' : 'in-stock';
     const statusText = qty < 5 ? 'Low Stock' : 'Good';
 
@@ -45,7 +45,7 @@ function addItem() {
         <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td>
     `;
 
-    // Clear inputs for the next item
+    // Clear inputs after task finished
     document.getElementById('itemName').value = '';
     document.getElementById('itemQty').value = '';
     document.getElementById('barcodeNum').value = '';
